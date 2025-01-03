@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
-const UserNameInput = () => {
+const UserNameInput = ({onUsernameSubmit }: {onUsernameSubmit: (username: string) => void}) => {
     const [username, setUsername] = useState("");
     
     const handleSubmit = (e: React.FormEvent) =>{
         e.preventDefault();
+        onUsernameSubmit(username);
         console.log("Username Submitted", username);
+        setUsername("");
+        
     };
 
     return (

@@ -10,7 +10,7 @@ import UserNameInput from '../components/UserNameInput';
 const Intro = () => {
     return (
         // need username form with submit button
-        <UserNameInput/>
+        <UserNameInput onUsernameSubmit={}/>
 
     );
 };
