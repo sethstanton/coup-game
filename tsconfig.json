@@ -1,15 +1,16 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "module": "esnext",
-      "strict": true,
-      "jsx": "react",
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true
-    },
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noResolve": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+  },
     "include": ["src"],
     "exclude": ["node_modules"]
-  }
-  
+}
