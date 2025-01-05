@@ -1,6 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import PlayerList from '../components/PlayerList';
 import { useNavigate } from 'react-router-dom';
+import { connectWebSocket,sendWebSocketMessage,listenWebSocket } from '../utils/websocket';
 
 /** This is going to be the login/intro page. 
  * - as a user, I want to be able to provide the user with a url
@@ -19,22 +20,37 @@ const Intro: React.FC<IntroProps> = (
     {username, setUsername, allUsernames, setAllUsernames }) => {
     
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    useEffect(()=> {
+        const socket = connectWebSocket('ws://localhost:3001');
+
+        listenWebSocket((message)=> {
+            switch (message.type){
+                case 'updatePlayers':
+                    setAllUsernames(message.players);
+                    console.log('Updated Player List:', message.players);
+                    break;
+                case 'error':
+                    setErrorMessage(message.message);
+                    break;
+                default:
+                    console.log('unknown error type:', message);
+            }
+        });
+
+        return() =>{
+            // if(socket) socket.close();
+        };
+    },[setAllUsernames]);
     
     const handleAddPlayer= (e: React.FormEvent) => {
         e.preventDefault();
-
-        if (allUsernames.includes(username)){
-            alert("This username has been taken, please choose a different name");
-            return;
-        }
-
-        if (username.trim()){
-            setAllUsernames([...allUsernames, username]);
-            // setUsername("");
-        }
+        sendWebSocketMessage({type: 'submitUsername', username});
         console.log("Username Submitted", username);
         
     };
+
     const handleStartGame = () => {
         if (allUsernames.length < 2){
             alert("At least 2 players are required to start the game.");
@@ -62,9 +78,12 @@ const Intro: React.FC<IntroProps> = (
                 <button type="submit">Submit</button>
             </form>
 
+            {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
+
             <PlayerList players={allUsernames}/>
             
-            <button onClick={handleStartGame} 
+            <button 
+            onClick={handleStartGame} 
             disabled = {allUsernames.length < 2|| allUsernames.length > 6}
             >Start Game</button>
         </div>
