@@ -27,7 +27,8 @@ const players = new Map();
 
 /**4 -----------------------------------------------------------------------------------------
  * creates event listeners that listen for certain events to take place, once they take place 
- * an action takes place as seen with the if & else parts
+ * an action takes place as seen with the if & else parts - without this, server would not handle 
+ * player messages.
  */
 wss.on('connection', (ws) => {
     console.log('New client Connected');
@@ -63,7 +64,7 @@ wss.on('connection', (ws) => {
         
     });
 
-    //handles plyers disconnecting
+    //handles plyers disconnecting - this is here to be developed later on when mvp is complete
     ws.on('close', () =>{
         if (ws.username){
             players.delete(ws.username);
