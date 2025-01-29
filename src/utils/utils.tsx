@@ -16,7 +16,7 @@ export const generateCards = (): CardInformation[] => {
             case Roles.CAPTAIN:
               return { name: role, action: 'Steal: Take 2 coins from another player.' };
             case Roles.AMBASSADOR:
-              return { name: role, action: 'Exchange: Swap cards with the court deck.' };
+              return { name: role, action: 'Exchange: Swap 2 cards with the court deck.' };
             case Roles.ASSASSIN:
               return { name: role, action: 'Assassinate: Pay 3 coins to eliminate a player.' };
             case Roles.CONTESSA:

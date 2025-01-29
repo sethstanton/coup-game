@@ -1,0 +1,3 @@
+1 - Get a server or multiplayers working so that each players has the same card per instance of game
+2 - designate one person as the host so that they can start the game
+3 - game functionality
